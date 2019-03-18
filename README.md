@@ -42,19 +42,19 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 
 | Name | Description | Path |
 |------|-------------|------|
-|[goto](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"goto")|go to path x||
-|[back](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"back")|go back to main path||
-|[clear](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"clear")|cleared the console||
-|[info](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"info")|informations about NerdyAion||
-|[help](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"help")|shows commands and paths||
-|[bye](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"bye")|close NerdyAion||
-|[create](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"create")|create a dmg chatlog pointer|dmg|
-|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"show")|shows dmg informations from pointer x|dmg|
-|[copy](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"copy")|copy dmg informations from pointer x|dmg|
-|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"show")|list of settings|settings|
-|[edit](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"edit")|edit a setting|settings|
-|[save](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"save")|saved changes from settings|settings|
-|[undo](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-"undo")|reset the last changes|settings|
+|[goto](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-goto)|go to path x||
+|[back](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-back)|go back to main path||
+|[clear](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-clear)|cleared the console||
+|[info](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-info)|informations about NerdyAion||
+|[help](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-help)|shows commands and paths||
+|[bye](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-bye)|close NerdyAion||
+|[create](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-create)|create a dmg chatlog pointer|dmg|
+|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-show)|shows dmg informations from pointer x|dmg|
+|[copy](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-copy)|copy dmg informations from pointer x|dmg|
+|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-show)|list of settings|settings|
+|[edit](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-edit)|edit a setting|settings|
+|[save](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-save)|saved changes from settings|settings|
+|[undo](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager#command-undo)|reset the last changes|settings|
 
 #### Command "goto"
 Sets the activ path to the path `<path>`.
@@ -204,7 +204,7 @@ undo
 - .net 4.6.1
 
 ## Changelog
-### = 0.1.0-alpha June 15th 2018 =
+### = 0.1.0-alpha March 18th 2019 =
 #### Added
 - damage calculation on the base of the immediate damage
 - base commands
