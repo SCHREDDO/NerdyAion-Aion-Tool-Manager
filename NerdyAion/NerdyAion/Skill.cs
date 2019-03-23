@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -33,6 +33,8 @@ namespace NerdyAion
     public class Skill
     {
         private String name;
+        private String target;
+        private DateTime actionTime;
         private long dmg;
         private bool crit;
         private List<long> dmgTicks;
@@ -41,6 +43,16 @@ namespace NerdyAion
         {
             get { return name; }
             set { name = value; }
+        }
+        public String Target
+        {
+            get { return target; }
+            set { target = value; }
+        }
+        public DateTime ActionTime
+        {
+            get { return actionTime; }
+            set { actionTime = value; }
         }
         public long Dmg
         {
@@ -58,9 +70,11 @@ namespace NerdyAion
             set { dmgTicks = value; }
         }
 
-        public Skill(String name, long dmg, bool crit)
+        public Skill(String name, String target, DateTime actionTime, long dmg, bool crit)
         {
             Name = name;
+            Target = target;
+            ActionTime = actionTime;
             Dmg = dmg;
             Crit = crit;
             DmgTicks = new List<long>();

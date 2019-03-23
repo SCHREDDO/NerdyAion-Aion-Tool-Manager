@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -44,9 +44,28 @@ namespace NerdyAion
             if (!Commands.Settings.LoudSettings())
             {
                 Commands.Settings.CreateSettingsFile();
-                Commands.Settings.AddSetting("version", "0.1.0-alpha", true, null);
+                Commands.Settings.AddSetting("version", "0.2.0-alpha", true, null);
                 Commands.Settings.AddSetting("log", @"C:\Program Files\Gameforge\AION Free-To-Play\Chat.log");
                 Commands.Settings.SaveSettings();
+            }
+            else
+            {
+                if (Commands.Settings.GetSetting("version") != "0.2.0 - alpha")
+                {
+                    SettingsController temp = new SettingsController(System.AppDomain.CurrentDomain.BaseDirectory + @"\settings.txt", false);
+                    temp.AddSetting("version", "0.2.0-alpha", true, null);
+
+                    foreach (Setting item in Commands.Settings.GetAllSettings())
+                    {
+                        if (item.Name != "version")
+                        {
+                            temp.AddSetting(item.Name, item.Value);
+                        }
+                    }
+
+                    temp.SaveSettings();
+                    Commands.Settings = temp;
+                }
             }
 
             Commands.ActivCommantLevel = CommantLevel.BaseLevel;

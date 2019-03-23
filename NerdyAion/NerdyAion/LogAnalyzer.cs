@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -82,6 +82,8 @@ namespace NerdyAion
 
             String eventSource = "";
             String eventTarget = "";
+            DateTime actionTime = new DateTime();
+            String time = "";
             String eventName = "";
             long eventEffectDamage = 0;
 
@@ -135,21 +137,47 @@ namespace NerdyAion
                                         eventEffectDamage = template.GetEventEffect(match);
                                     }
                                     break;
+                                case "time":
+                                    time = template.GetTime(match);
+                                    break;
                                 default:
                                     break;
                             }
                         }
                     }
 
-                    if (!PlayerList.ContainsKey(eventSource))
+                    if (eventSource != "")
                     {
-                        PlayerList.Add(eventSource, new Player(eventSource));
-                    }
+                        if (!PlayerList.ContainsKey(eventSource))
+                        {
+                            PlayerList.Add(eventSource, new Player(eventSource));
+                        }
 
-                    PlayerList[eventSource].AddSkill(new Skill(eventName, eventEffectDamage, false));
+                        actionTime = DateTime.ParseExact(time, "yyyy.MM.dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                        PlayerList[eventSource].AddSkill(new Skill(eventName, eventTarget, actionTime, eventEffectDamage, false));
+
+                        if (eventName != "")
+                        {
+                            if (!SkillList.ContainsKey((eventName + "_" + eventTarget)))
+                            {
+                                SkillList.Add((eventName + "_" + eventTarget), "");
+                            }
+
+                            SkillList[(eventName + "_" + eventTarget)] = eventSource;
+                        }
+                    }
+                    else if (SkillList.ContainsKey((eventName + "_" + eventTarget)))
+                    {
+                        if (PlayerList.ContainsKey(SkillList[(eventName + "_" + eventTarget)]))
+                        {
+                            PlayerList[SkillList[(eventName + "_" + eventTarget)]].AddSkillTick(eventName, eventTarget, eventEffectDamage, actionTime);
+                        }
+                    }
 
                     eventSource = "";
                     eventTarget = "";
+                    time = "";
                     eventName = "";
                     eventEffectDamage = 0;
                 }
@@ -175,8 +203,11 @@ namespace NerdyAion
             //2019.03.16 17:09:04 : Ihr habt Wilder Sumpf-Oculis durch Benutzung von Seelenraub 24.876 Schaden zugefügt.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* habt .* durch Benutzung von .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) habt (?<eventTarget>[^,]+) durch Benutzung von (?<eventName_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
@@ -187,8 +218,11 @@ namespace NerdyAion
             //2019.03.16 17:09:13 : Ihr fügt Vom Drachenbund ausgebildeter Mantikor durch Magische Umkehr 0 Schaden zu und hebt einige der magischen Verstärkungen und Schwächungen auf. 
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* fügt .* durch .* Schaden zu und .*.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) fügt (?<eventTarget>[^,]+) durch (?<eventName_eventEffect>[^,]+) Schaden zu und (?<eventEffectExtra>[^,]+).";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
@@ -200,8 +234,11 @@ namespace NerdyAion
             //2019.03.16 17:09:14 : Ihr fügt Vom Drachenbund ausgebildeter Mantikor durch Mana-Explosion fortwährend Schaden zu.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* fügt .* durch .* fortwährend Schaden zu.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) fügt (?<eventTarget>[^,]+) durch (?<eventName>[^,]+) fortwährend Schaden zu.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
@@ -212,8 +249,11 @@ namespace NerdyAion
             //2019.03.16 17:09:15 : Vom Drachenbund ausgebildeter Mantikor hat Euch durch Niederwerfen 0 Schaden zugefügt.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* hat .* durch .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) hat (?<eventTarget>[^,]+) durch (?<eventName_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
@@ -224,8 +264,11 @@ namespace NerdyAion
             //2019.03.16 17:09:18 : Vom Drachenbund ausgebildeter Mantikor erhält durch Erosion 6.736 Schaden.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* erhält durch .* Schaden.";
             temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) erhält durch (?<eventName_eventEffect>[^,]+) Schaden.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventTarget");
             temp.AddVariable("eventName_eventEffect");
@@ -235,8 +278,11 @@ namespace NerdyAion
             //2019.03.16 17:09:57 : Ihr habt Derbfell-Rynoce 7.572 Schaden zugefügt.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* habt .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) habt (?<eventTarget_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget_eventEffect");
@@ -246,8 +292,11 @@ namespace NerdyAion
             //2019.03.16 17:10:33 : Aikumi hat Boshafter Excura durch Benutzung von Seelenraub 24.360 Schaden zugefügt.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* hat .* durch Benutzung von .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) hat (?<eventTarget>[^,]+) durch Benutzung von (?<eventName_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
@@ -258,8 +307,11 @@ namespace NerdyAion
             //2019.03.16 17:19:16 : Piton hat Sherilla-Antri 721 Schaden zugefügt.
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* hat .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) hat (?<eventTarget_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget_eventEffect");
@@ -268,12 +320,44 @@ namespace NerdyAion
 
             temp = new AnalysisTemplate();
             temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
             temp.Strucktor = ".* : .* habt .* durch .* Schaden zugefügt.";
             temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) habt (?<eventTarget>[^,]+) durch (?<eventName_eventEffect>[^,]+) Schaden zugefügt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
             temp.AddVariable("time");
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
             temp.AddVariable("eventName_eventEffect");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.16 17:18:53 : Flammen - Piton erhält durch Umfangreiche Erosion 7.278 Schaden.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* erhält durch .* Schaden.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) erhält durch (?<eventName_eventEffect>[^,]+) Schaden.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventName_eventEffect");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.16 17:18:40 : Ihr fügt Flammen-Piton durch Höllenqualen fortwährend Schaden zu. 
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* fügt .* durch .* fortwährend Schaden zu.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) fügt (?<eventTarget>[^,]+) durch (?<eventName>[^,]+) fortwährend Schaden zu.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventName");
 
             AnalysisTemplates.Add(temp);
         }
