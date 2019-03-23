@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -62,6 +62,22 @@ namespace NerdyAion
         public void AddSkill(Skill skill)
         {
             UsedSkills.Add(skill);
+        }
+
+        public void AddSkillTick(String skillname, String target, long damage, DateTime actionTime)
+        {
+            for (int i = usedSkills.Count - 1; i >= 0; i--)
+            {
+                if (usedSkills[i].Name == skillname && usedSkills[i].Target == target)
+                {
+                    usedSkills[i].DmgTicks.Add(damage);
+                }
+
+                if (usedSkills[i].ActionTime.AddSeconds(60) < actionTime)
+                {
+                    return;
+                }
+            }
         }
 
         public long CalculateSkillDmg()

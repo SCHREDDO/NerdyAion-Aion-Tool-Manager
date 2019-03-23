@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -35,8 +35,10 @@ namespace NerdyAion
     {
         private String strucktor;
         private String template;
+        private String criticalIdentifier;
         /*
          * Supported variables:
+         * time
          * eventSource
          * eventTarget
          * eventEffect
@@ -47,7 +49,9 @@ namespace NerdyAion
          */
         private Dictionary<String, String> variables;
         private Boolean damageEvent;
-        
+        private Boolean damageOverTime;
+        private Boolean criticalHit;
+
         public String Strucktor
         {
             get { return strucktor; }
@@ -57,6 +61,11 @@ namespace NerdyAion
         {
             get { return template; }
             set { template = value; }
+        }
+        public String CriticalIdentifier
+        {
+            get { return criticalIdentifier; }
+            set { criticalIdentifier = value; }
         }
         public Dictionary<String, String> Variables
         {
@@ -68,13 +77,26 @@ namespace NerdyAion
             get { return damageEvent; }
             set { damageEvent = value; }
         }
+        public Boolean DamageOverTime
+        {
+            get { return damageOverTime; }
+            set { damageOverTime = value; }
+        }
+        public Boolean CriticalHit
+        {
+            get { return criticalHit; }
+            set { criticalHit = value; }
+        }
 
         public AnalysisTemplate()
         {
             Strucktor = "";
             Template = "";
+            CriticalIdentifier = "";
             Variables = new Dictionary<string, string>();
             DamageEvent = false;
+            DamageOverTime = false;
+            CriticalHit = false;
         }
 
         public void AddVariable(String variable)
@@ -82,27 +104,32 @@ namespace NerdyAion
             Variables.Add(variable, variable);
         }
 
+        public String GetTime(Match result)
+        {
+            return CheckForCriticalHit(result.Groups[Variables["time"]].Value);
+        }
+
         public String GetEventSource(Match result)
         {
-            return result.Groups[Variables["eventSource"]].Value;
+            return CheckForCriticalHit(result.Groups[Variables["eventSource"]].Value);
         }
 
         public String GetEventTarget(Match result)
         {
             if (Variables.ContainsKey("eventTarget_eventEffect"))
             {
-                return SplitEventTargetAndEventEffect(result)[0];
+                return CheckForCriticalHit(SplitEventTargetAndEventEffect(result)[0]);
             }
-            return result.Groups[Variables["eventTarget"]].Value;
+            return CheckForCriticalHit(result.Groups[Variables["eventTarget"]].Value);
         }
 
         public String GetEventName(Match result)
         {
             if (Variables.ContainsKey("eventName_eventEffect"))
             {
-                return SplitEventNameAndEventEffect(result)[0];
+                return CheckForCriticalHit(SplitEventNameAndEventEffect(result)[0]);
             }
-            return result.Groups[Variables["eventName"]].Value;
+            return CheckForCriticalHit(result.Groups[Variables["eventName"]].Value);
         }
 
         public long GetEventEffect(Match result)
@@ -121,7 +148,7 @@ namespace NerdyAion
 
         public String GetEventEffectExtra(Match result)
         {
-            return result.Groups[Variables["eventEffectExtra"]].Value;
+            return CheckForCriticalHit(result.Groups[Variables["eventEffectExtra"]].Value);
         }
 
         private String[] SplitEventTargetAndEventEffect(Match result)
@@ -138,6 +165,17 @@ namespace NerdyAion
             Match match = pattern.Match(result.Groups[variables["eventName_eventEffect"]].Value);
 
             return new String[] { match.Groups["eventName"].Value, match.Groups["eventEffect"].Value };
+        }
+
+        private String CheckForCriticalHit(String text)
+        {
+            if (text.Contains(CriticalIdentifier))
+            {
+                CriticalHit = true;
+                text = text.Substring((CriticalIdentifier.Length));
+            }
+
+            return text;
         }
     }
 }
