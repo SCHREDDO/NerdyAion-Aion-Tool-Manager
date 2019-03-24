@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 23.03.2019
+// Last Edited On: 24.03.2019
 // Language: C#
 //
 using System;
@@ -137,6 +137,14 @@ namespace NerdyAion
                                         eventEffectDamage = template.GetEventEffect(match);
                                     }
                                     break;
+                                case "eventSource_eventName":
+                                    eventSource = template.GetEventSource(match);
+                                    eventName = template.GetEventName(match);
+                                    if (template.DamageEvent)
+                                    {
+                                        eventEffectDamage = template.GetEventEffect(match);
+                                    }
+                                    break;
                                 case "time":
                                     time = template.GetTime(match);
                                     break;
@@ -144,43 +152,45 @@ namespace NerdyAion
                                     break;
                             }
                         }
+
+                        break;
                     }
-
-                    if (eventSource != "")
-                    {
-                        if (!PlayerList.ContainsKey(eventSource))
-                        {
-                            PlayerList.Add(eventSource, new Player(eventSource));
-                        }
-
-                        actionTime = DateTime.ParseExact(time, "yyyy.MM.dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
-                        PlayerList[eventSource].AddSkill(new Skill(eventName, eventTarget, actionTime, eventEffectDamage, false));
-
-                        if (eventName != "")
-                        {
-                            if (!SkillList.ContainsKey((eventName + "_" + eventTarget)))
-                            {
-                                SkillList.Add((eventName + "_" + eventTarget), "");
-                            }
-
-                            SkillList[(eventName + "_" + eventTarget)] = eventSource;
-                        }
-                    }
-                    else if (SkillList.ContainsKey((eventName + "_" + eventTarget)))
-                    {
-                        if (PlayerList.ContainsKey(SkillList[(eventName + "_" + eventTarget)]))
-                        {
-                            PlayerList[SkillList[(eventName + "_" + eventTarget)]].AddSkillTick(eventName, eventTarget, eventEffectDamage, actionTime);
-                        }
-                    }
-
-                    eventSource = "";
-                    eventTarget = "";
-                    time = "";
-                    eventName = "";
-                    eventEffectDamage = 0;
                 }
+                
+                if (eventSource != "")
+                {
+                    if (!PlayerList.ContainsKey(eventSource))
+                    {
+                        PlayerList.Add(eventSource, new Player(eventSource));
+                    }
+
+                    actionTime = DateTime.ParseExact(time, "yyyy.MM.dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    
+                    PlayerList[eventSource].AddSkill(new Skill(eventName, eventTarget, actionTime, eventEffectDamage, false));
+
+                    if (eventName != "")
+                    {
+                        if (!SkillList.ContainsKey((eventName + "_" + eventTarget)))
+                        {
+                            SkillList.Add((eventName + "_" + eventTarget), "");
+                        }
+
+                        SkillList[(eventName + "_" + eventTarget)] = eventSource;
+                    }
+                }
+                else if (SkillList.ContainsKey((eventName + "_" + eventTarget)))
+                {
+                    if (PlayerList.ContainsKey(SkillList[(eventName + "_" + eventTarget)]))
+                    {
+                        PlayerList[SkillList[(eventName + "_" + eventTarget)]].AddSkillTick(eventName, eventTarget, eventEffectDamage, actionTime);
+                    }
+                }
+
+                eventSource = "";
+                eventTarget = "";
+                time = "";
+                eventName = "";
+                eventEffectDamage = 0;
             }
         }
 
@@ -358,6 +368,33 @@ namespace NerdyAion
             temp.AddVariable("eventSource");
             temp.AddVariable("eventTarget");
             temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.24 00:38:48 : Prüfungsvogelscheuche erhält den Effekt 'Verzögerte Explosion', weil Ihr Großer Vulkanausbruch benutzt habt.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* erhält den Effekt '.*', weil .* benutzt habt.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) erhält den Effekt '(?<effect>[^,]+)', weil (?<eventSource_eventName>[^,]+) benutzt habt.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventSource_eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* erhält den Effekt '.*', weil .* benutzt hat.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) erhält den Effekt '(?<effect>[^,]+)', weil (?<eventSource_eventName>[^,]+) benutzt hat.";
+            temp.CriticalIdentifier = "Kritischer Treffer!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventSource_eventName");
 
             AnalysisTemplates.Add(temp);
         }

@@ -44,16 +44,18 @@ namespace NerdyAion
             if (!Commands.Settings.LoudSettings())
             {
                 Commands.Settings.CreateSettingsFile();
-                Commands.Settings.AddSetting("version", "0.2.0-alpha", true, null);
+                Commands.Settings.AddSetting("version", "0.3.0-alpha", true, null);
                 Commands.Settings.AddSetting("log", @"C:\Program Files\Gameforge\AION Free-To-Play\Chat.log");
+                Commands.Settings.AddSetting("player", "ich");
                 Commands.Settings.SaveSettings();
             }
             else
             {
-                if (Commands.Settings.GetSetting("version") != "0.2.0 - alpha")
+                if (Commands.Settings.GetSetting("version") != "0.3.0 - alpha")
                 {
                     SettingsController temp = new SettingsController(System.AppDomain.CurrentDomain.BaseDirectory + @"\settings.txt", false);
-                    temp.AddSetting("version", "0.2.0-alpha", true, null);
+                    temp.AddSetting("version", "0.3.0-alpha", true, null);
+                    temp.AddSetting("player", "ich");
 
                     foreach (Setting item in Commands.Settings.GetAllSettings())
                     {

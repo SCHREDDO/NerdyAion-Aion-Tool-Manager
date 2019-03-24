@@ -1,11 +1,11 @@
 # NerdyAion-Aion-Tool-Manager
-![build version](https://img.shields.io/badge/version-0.2.0--alpha-brightgreen.svg)
-![release version](https://img.shields.io/badge/release-v0.2.0--alpha-blue.svg)
+![build version](https://img.shields.io/badge/version-0.3.0--alpha-brightgreen.svg)
+![release version](https://img.shields.io/badge/release-v0.3.0--alpha-blue.svg)
 ![framework or language](https://img.shields.io/badge/.net-4.6.1-blue.svg)
 ![license](https://img.shields.io/badge/license-AGPL--3.0-lightgrey.svg)
 
-### Current Version 0.2.0-alpha
-### Development Version 0.2.0-alpha
+### Current Version 0.3.0-alpha
+### Development Version 0.3.0-alpha
 
 ## About
 NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to provide the user with useful information, especially about his and others players DMG data. NerdyAion is programed in C# (.net 4.6.1).
@@ -60,6 +60,7 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 | Name | Description |
 |------|-------------|
 |log|the path of the Aion Chat.log file|
+|player|name by which the player is displayed|
 
 ## Roadmap
 ### v0.1.0-alpha
@@ -82,7 +83,6 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 - languarge settings
 - language support for english
 ### v1.1.0
-- pve (player versus environment)/pvp (player versus player) informationen
 - expand damage command with more options
 ### v1.2.0
 - expand base settings
@@ -101,6 +101,9 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 - system.cfg settings
 ### v2.4.0
 - command to show obtain damage informationen
+### v.2.5.0
+- pve (player versus environment)/pvp (player versus player) informationen
+- expand damage command with more options
 ### v3.0.0
 - heal calculation on the base of the immediate heal
 - expand the heal calculation by heal ticks (heal over time)
@@ -118,6 +121,13 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 - .net 4.6.1
 
 ## Changelog ([complete changelog: CHANGELOG.md](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/CHANGELOG.md))
+### = 0.3.0-alpha March 24th 2019 =
+#### Added
+- new damage informationen dps (damage per second) 
+- new base settings player
+#### Fixed
+- Fix damage calculation: the same attack added multiple times
+- Fix damage calculation: damage tick associated for multiple attacks
 ### = 0.2.0-alpha March 23rd 2019 =
 #### Changed
 - expand the damage calculation by dot (damage over time) ticks

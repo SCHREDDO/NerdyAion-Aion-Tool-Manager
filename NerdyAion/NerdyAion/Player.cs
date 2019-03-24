@@ -56,28 +56,50 @@ namespace NerdyAion
         {
             Name = name;
             UsedSkills = new List<Skill>();
-            ActionTime = 0;
+            ActionTime = 1;
         }
 
         public void AddSkill(Skill skill)
         {
+            if (UsedSkills.Count > 0)
+            {
+                int time = (skill.ActionTime - UsedSkills[(UsedSkills.Count - 1)].ActionTime).Seconds;
+
+                if (time < 10)
+                {
+                    ActionTime += time;
+                }
+                else
+                {
+                    ActionTime += 1;
+                }
+            }
+            else
+            {
+                ActionTime += 1;
+            }
+
             UsedSkills.Add(skill);
         }
 
-        public void AddSkillTick(String skillname, String target, long damage, DateTime actionTime)
+        public Boolean AddSkillTick(String skillname, String target, long damage, DateTime actionTime)
         {
             for (int i = usedSkills.Count - 1; i >= 0; i--)
             {
                 if (usedSkills[i].Name == skillname && usedSkills[i].Target == target)
                 {
-                    usedSkills[i].DmgTicks.Add(damage);
+                    usedSkills[i].AddDmgTick(damage, actionTime);
+
+                    return true;
                 }
 
                 if (usedSkills[i].ActionTime.AddSeconds(60) < actionTime)
                 {
-                    return;
+                    break;
                 }
             }
+
+            return false;
         }
 
         public long CalculateSkillDmg()
@@ -90,6 +112,11 @@ namespace NerdyAion
             }
 
             return dmg;
+        }
+
+        public long GetDPS()
+        {
+            return CalculateSkillDmg() / ActionTime;
         }
     }
 }
