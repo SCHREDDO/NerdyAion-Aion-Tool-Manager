@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 23.03.2019
+// Last Edited On: 24.03.2019
 // Language: C#
 //
 using System;
@@ -44,6 +44,7 @@ namespace NerdyAion
          * eventEffect
          * eventName
          * eventEffectExtra
+         * eventSource_eventName
          * eventTarget_eventEffect
          * eventName_eventEffect
          */
@@ -111,6 +112,11 @@ namespace NerdyAion
 
         public String GetEventSource(Match result)
         {
+            if (Variables.ContainsKey("eventSource_eventName"))
+            {
+                return CheckForCriticalHit(SplitEventSourceAndEventName(result)[0]);
+            }
+
             return CheckForCriticalHit(result.Groups[Variables["eventSource"]].Value);
         }
 
@@ -120,6 +126,7 @@ namespace NerdyAion
             {
                 return CheckForCriticalHit(SplitEventTargetAndEventEffect(result)[0]);
             }
+
             return CheckForCriticalHit(result.Groups[Variables["eventTarget"]].Value);
         }
 
@@ -129,6 +136,11 @@ namespace NerdyAion
             {
                 return CheckForCriticalHit(SplitEventNameAndEventEffect(result)[0]);
             }
+            else if (Variables.ContainsKey("eventSource_eventName"))
+            {
+                return CheckForCriticalHit(SplitEventSourceAndEventName(result)[1]);
+            }
+
             return CheckForCriticalHit(result.Groups[Variables["eventName"]].Value);
         }
 
@@ -165,6 +177,14 @@ namespace NerdyAion
             Match match = pattern.Match(result.Groups[variables["eventName_eventEffect"]].Value);
 
             return new String[] { match.Groups["eventName"].Value, match.Groups["eventEffect"].Value };
+        }
+
+        private String[] SplitEventSourceAndEventName(Match result)
+        {
+            Regex pattern = new Regex(@"(?<eventSource>[a-zA-Z]+) (?<eventName>[^,]+)");
+            Match match = pattern.Match(result.Groups[variables["eventSource_eventName"]].Value);
+
+            return new String[] { match.Groups["eventSource"].Value, match.Groups["eventName"].Value };
         }
 
         private String CheckForCriticalHit(String text)

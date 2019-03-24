@@ -38,6 +38,7 @@ namespace NerdyAion
         private long dmg;
         private bool crit;
         private List<long> dmgTicks;
+        private List<DateTime> dmgTicksTime;
 
         public String Name
         {
@@ -69,6 +70,11 @@ namespace NerdyAion
             get { return dmgTicks; }
             set { dmgTicks = value; }
         }
+        public List<DateTime> DmgTicksTime
+        {
+            get { return dmgTicksTime; }
+            set { dmgTicksTime = value; }
+        }
 
         public Skill(String name, String target, DateTime actionTime, long dmg, bool crit)
         {
@@ -78,11 +84,13 @@ namespace NerdyAion
             Dmg = dmg;
             Crit = crit;
             DmgTicks = new List<long>();
+            DmgTicksTime = new List<DateTime>();
         }
 
-        public void AddDmgTick(long dmgTick)
+        public void AddDmgTick(long dmgTick, DateTime actionTime)
         {
             DmgTicks.Add(dmgTick);
+            DmgTicksTime.Add(actionTime);
         }
 
         public long CalculateSkillDmg()

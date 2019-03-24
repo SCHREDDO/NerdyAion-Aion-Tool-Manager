@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 18.03.2019
+// Last Edited On: 23.03.2019
 // Language: C#
 //
 using System;
@@ -210,11 +210,21 @@ namespace NerdyAion
 
                             Analyzer[command[1]].AnalyzeLog();
 
+                            String player = "";
                             foreach (KeyValuePair<String, Player> item in Analyzer[command[1]].PlayerList)
                             {
                                 if (!item.Key.Equals(""))
                                 {
-                                    Console.WriteLine(item.Key + ": " + item.Value.CalculateSkillDmg());
+                                    if (item.Key == "ihr" || item.Key == "Ihr")
+                                    {
+                                        player = Settings.GetSetting("player");
+                                    }
+                                    else
+                                    {
+                                        player = item.Key;
+                                    }
+
+                                    Console.WriteLine(player + ": " + item.Value.CalculateSkillDmg() + " (" + item.Value.GetDPS() + ")");
                                 }
                             }
                             Console.WriteLine("=====================");
@@ -238,11 +248,21 @@ namespace NerdyAion
                             Analyzer[command[1]].AnalyzeLog();
 
                             String dmgData = "| ";
+                            String player = "";
                             foreach (KeyValuePair<String, Player> item in Analyzer[command[1]].PlayerList)
                             {
                                 if (!item.Key.Equals(""))
                                 {
-                                    dmgData = item.Key + ": " + item.Value.CalculateSkillDmg() + " | ";
+                                    if (item.Key == "ihr" || item.Key == "Ihr")
+                                    {
+                                        player = Settings.GetSetting("player");
+                                    }
+                                    else
+                                    {
+                                        player = item.Key;
+                                    }
+
+                                    dmgData = player + ": " + item.Value.CalculateSkillDmg() + " (" + item.Value.GetDPS() + ")" + " | ";
                                 }
                             }
 

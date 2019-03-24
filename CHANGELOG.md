@@ -1,10 +1,17 @@
-## Changelog
-### = 0.2.0-alpha March 23rd 2019 =
-#### Changed
+# Changelog
+## = 0.3.0-alpha March 24th 2019 =
+### Added
+- new damage informationen dps (damage per second) 
+- new base settings player
+### Fixed
+- Fix damage calculation: the same attack added multiple times
+- Fix damage calculation: damage tick associated for multiple attacks
+## = 0.2.0-alpha March 23rd 2019 =
+### Changed
 - expand the damage calculation by dot (damage over time) ticks
 - expand the damage calculation by critique hits
-### = 0.1.0-alpha March 18th 2019 =
-#### Added
+## = 0.1.0-alpha March 18th 2019 =
+### Added
 - damage calculation on the base of the immediate damage
 - new base command goto
 - new base command back
