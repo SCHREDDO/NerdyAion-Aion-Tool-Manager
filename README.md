@@ -33,9 +33,9 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 2. execute NerdyAion.exe
 3. go to settings and check the path to the Aion (setting: aion) example: `C:\Program Files\Gameforge\AION Free-To-Play`
 4. activate Aion Chat.log with `chatlog on`
-4.1. set the setting `check_chatlog_active` 1
-5. start Aion
-6. use the dmg commands to get informations
+5. [optional] set the setting `check_chatlog_active` to 1
+6. start Aion
+7. use the dmg commands to get informations
 
 ## Supported Languages
 - german
@@ -125,8 +125,8 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 - .net 4.6.1
 
 ## Changelog ([complete changelog: CHANGELOG.md](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/CHANGELOG.md))
-## = 0.5.0-alpha March 25th 2019 =
-### Added
+### = 0.5.0-alpha March 25th 2019 =
+#### Added
 - new base setting: check_chatlog_active
 ### = 0.4.0-alpha March 25th 2019 =
 #### Added
