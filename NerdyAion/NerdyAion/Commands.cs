@@ -208,6 +208,40 @@ namespace NerdyAion
                         }
                     }
                     break;
+                case "reset":
+                    if (command.Length < 2)
+                    {
+                        Commands.ShowError("unknown command \"" + usedCommand + "\"");
+                    }
+                    else
+                    {
+                        if (Analyzer.ContainsKey(command[1]))
+                        {
+                            Analyzer[command[1]] = new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log");
+                        }
+                        else
+                        {
+                            Commands.ShowError("pointer \"" + command[1] + "\" don't exists");
+                        }
+                    }
+                    break;
+                case "delete":
+                    if (command.Length < 2)
+                    {
+                        Commands.ShowError("unknown command \"" + usedCommand + "\"");
+                    }
+                    else
+                    {
+                        if (Analyzer.ContainsKey(command[1]))
+                        {
+                            Analyzer.Remove(command[1]);
+                        }
+                        else
+                        {
+                            Commands.ShowError("pointer \"" + command[1] + "\" don't exists");
+                        }
+                    }
+                    break;
                 case "list":
                     Console.WriteLine("=== POINTER LIST ===");
                     foreach (KeyValuePair<String, LogAnalyzer> item in Analyzer)

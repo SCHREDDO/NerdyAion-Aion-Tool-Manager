@@ -1,11 +1,11 @@
 # NerdyAion-Aion-Tool-Manager
-![build version](https://img.shields.io/badge/version-0.5.0--alpha-brightgreen.svg)
+![build version](https://img.shields.io/badge/version-1.0.0--alpha-brightgreen.svg)
 ![release version](https://img.shields.io/badge/release-v0.5.0--alpha-blue.svg)
 ![framework or language](https://img.shields.io/badge/.net-4.6.1-blue.svg)
 ![license](https://img.shields.io/badge/license-AGPL--3.0-lightgrey.svg)
 
 ### Current Version 0.5.0-alpha
-### Development Version 0.5.0-alpha
+### Development Version 1.0.0-alpha
 
 ## About
 NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to provide the user with useful information, especially about his and others players DMG data. NerdyAion is programed in C# (.net 4.6.1).
@@ -52,6 +52,8 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 |[help](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-help)|shows commands and paths||
 |[bye](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-bye)|close NerdyAion||
 |[create](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-create)|create a dmg chatlog pointer|dmg|
+|[reset](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-reset)|reset the dmg chatlog pointer x|dmg|
+|[delete](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-delete)|delete the dmg chatlog pointer x|dmg|
 |[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|shows dmg informations from pointer x|dmg|
 |[copy](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-copy)|copy dmg informations from pointer x|dmg|
 |[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|list of settings|settings|

@@ -10,6 +10,8 @@
 |[help](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-help)|shows commands and paths||
 |[bye](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-bye)|close NerdyAion||
 |[create](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-create)|create a dmg chatlog pointer|dmg|
+|[reset](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-reset)|reset the dmg chatlog pointer x|dmg|
+|[delete](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-delete)|delete the dmg chatlog pointer x|dmg|
 |[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|shows dmg informations from pointer x|dmg|
 |[copy](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-copy)|copy dmg informations from pointer x|dmg|
 |[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|list of settings|settings|
@@ -64,6 +66,20 @@ bye
 Create a pointer (start point) for the analyzing with the given name `<pointer name>`.
 ```console
 create <pointer name>
+```
+Arguments:
+- `pointer name` the pointer name
+## Command "reset"
+Reset the pointer `<pointer name>`.
+```console
+reset <pointer name>
+```
+Arguments:
+- `pointer name` the pointer name
+## Command "delete"
+Delete the pointer `<pointer name>`.
+```console
+delete <pointer name>
 ```
 Arguments:
 - `pointer name` the pointer name
