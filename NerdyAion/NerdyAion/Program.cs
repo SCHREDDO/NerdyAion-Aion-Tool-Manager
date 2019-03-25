@@ -44,22 +44,24 @@ namespace NerdyAion
             if (!Commands.Settings.LoudSettings())
             {
                 Commands.Settings.CreateSettingsFile();
-                Commands.Settings.AddSetting("version", "0.4.0-alpha", true, null);
+                Commands.Settings.AddSetting("version", "0.5.0-alpha", true, null);
                 Commands.Settings.AddSetting("aion", @"C:\Program Files\Gameforge\AION Free-To-Play");
                 Commands.Settings.AddSetting("player", "ich");
+                Commands.Settings.AddSetting("chatlog_active", "0");
                 Commands.Settings.SaveSettings();
             }
             else
             {
-                if (Commands.Settings.GetSetting("version") != "0.4.0 - alpha")
+                if (Commands.Settings.GetSetting("version") != "0.5.0-alpha")
                 {
                     SettingsController temp = new SettingsController(System.AppDomain.CurrentDomain.BaseDirectory + @"\settings.txt", false);
-                    temp.AddSetting("version", "0.4.0-alpha", true, null);
-                    Commands.Settings.AddSetting("aion", @"C:\Program Files\Gameforge\AION Free-To-Play");
+                    temp.AddSetting("version", "0.5.0-alpha", true, null);
+                    temp.AddSetting("aion", @"C:\Program Files\Gameforge\AION Free-To-Play");
+                    temp.AddSetting("check_chatlog_active", "0");
 
                     foreach (Setting item in Commands.Settings.GetAllSettings())
                     {
-                        if (item.Name != "version" && item.Name != "log")
+                        if (item.Name != "version")
                         {
                             temp.AddSetting(item.Name, item.Value);
                         }
@@ -68,6 +70,11 @@ namespace NerdyAion
                     temp.SaveSettings();
                     Commands.Settings = temp;
                 }
+            }
+        
+            if (Commands.Settings.GetSetting("check_chatlog_active") == "1")
+            {
+                SystemCFGEditor.SetChatLogActive(Commands.Settings.GetSetting("aion") + @"\system.cfg");
             }
 
             Commands.ActivCommantLevel = CommantLevel.BaseLevel;

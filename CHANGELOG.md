@@ -1,4 +1,7 @@
 # Changelog
+## = 0.5.0-alpha March 25th 2019 =
+### Added
+- new base setting: check_chatlog_active
 ## = 0.4.0-alpha March 25th 2019 =
 ### Added
 - new base setting: aion
