@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 23.03.2019
+// Last Edited On: 25.02.2019
 // Language: C#
 //
 using System;
@@ -87,12 +87,29 @@ namespace NerdyAion
             {
                 case "info":
                     Console.WriteLine();
-                    Console.WriteLine("###########################################################");
+                    Console.WriteLine("###################################################################");
                     Console.WriteLine("NerdyAion [" + Settings.GetSetting("version") + "]");
                     Console.WriteLine("Author: SCHREDDO");
                     Console.WriteLine("Repository: https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager");
-                    Console.WriteLine("###########################################################");
+                    Console.WriteLine("###################################################################");
                     Console.WriteLine();
+                    break;
+                case "chatlog":
+                    if (command.Length < 2)
+                    {
+                        Commands.ShowError("unknown command \"" + usedCommand + "\"");
+                    }
+                    else
+                    {
+                        if (command[1] == "on")
+                        {
+                            SystemCFGEditor.SetChatLogActive(Settings.GetSetting("aion") + @"\system.cfg");
+                        }
+                        else
+                        {
+                            Commands.ShowError("unknown command \"" + usedCommand + "\"");
+                        }
+                    }
                     break;
                 case "clear":
                     Console.Clear();
@@ -124,7 +141,7 @@ namespace NerdyAion
                 case "help":
                     if (command.Length < 2)
                     {
-                        Console.WriteLine("Commands: info, clear, goto, back, help, bye\nPaths: dmg, settings");
+                        Console.WriteLine("Commands: info, chatlog, clear, goto, back, help, bye\nPaths: dmg, settings");
                     }
                     else
                     {
@@ -132,6 +149,9 @@ namespace NerdyAion
                         {
                             case "info":
                                 Console.WriteLine("Infos about NerdyAion.");
+                                break;
+                            case "chatlog":
+                                Console.WriteLine("chatlog [option] | options: on");
                                 break;
                             case "bye":
                                 Console.WriteLine("Close NerdyAion.");
@@ -180,7 +200,7 @@ namespace NerdyAion
                     {
                         if (!Analyzer.ContainsKey(command[1]))
                         {
-                            Analyzer.Add(command[1], new LogAnalyzer(Settings.GetSetting("log")));
+                            Analyzer.Add(command[1], new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log"));
                         }
                         else
                         {
