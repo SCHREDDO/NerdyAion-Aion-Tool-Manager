@@ -1,11 +1,11 @@
 # NerdyAion-Aion-Tool-Manager
-![build version](https://img.shields.io/badge/version-0.3.0--alpha-brightgreen.svg)
+![build version](https://img.shields.io/badge/version-0.4.0--alpha-brightgreen.svg)
 ![release version](https://img.shields.io/badge/release-v0.3.0--alpha-blue.svg)
 ![framework or language](https://img.shields.io/badge/.net-4.6.1-blue.svg)
 ![license](https://img.shields.io/badge/license-AGPL--3.0-lightgrey.svg)
 
 ### Current Version 0.3.0-alpha
-### Development Version 0.3.0-alpha
+### Development Version 0.4.0-alpha
 
 ## About
 NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to provide the user with useful information, especially about his and others players DMG data. NerdyAion is programed in C# (.net 4.6.1).
