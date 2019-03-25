@@ -1,11 +1,11 @@
 # NerdyAion-Aion-Tool-Manager
-![build version](https://img.shields.io/badge/version-0.3.0--alpha-brightgreen.svg)
+![build version](https://img.shields.io/badge/version-0.4.0--alpha-brightgreen.svg)
 ![release version](https://img.shields.io/badge/release-v0.3.0--alpha-blue.svg)
 ![framework or language](https://img.shields.io/badge/.net-4.6.1-blue.svg)
 ![license](https://img.shields.io/badge/license-AGPL--3.0-lightgrey.svg)
 
 ### Current Version 0.3.0-alpha
-### Development Version 0.3.0-alpha
+### Development Version 0.4.0-alpha
 
 ## About
 NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to provide the user with useful information, especially about his and others players DMG data. NerdyAion is programed in C# (.net 4.6.1).
@@ -31,9 +31,10 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 0. install .net runtime
 1. download [NerdyAion.exe](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/releases)
 2. execute NerdyAion.exe
-3. go to settings and check the path to the Aion Chat.log file
-4. activate Aion Chat.log if needed
-5. use the dmg commands to get informations
+3. go to settings and check the path to the Aion (setting: aion) example: `C:\Program Files\Gameforge\AION Free-To-Play`
+4. activate Aion Chat.log with `chatlog on`
+5. start Aion
+6. use the dmg commands to get informations
 
 ## Supported Languages
 - german
@@ -43,6 +44,7 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 | Name | Description | Path |
 |------|-------------|------|
 |[goto](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-goto)|go to path x||
+|[chatlog](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-chatlog)|set chatlog active||
 |[back](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-back)|go back to main path||
 |[clear](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-clear)|cleared the console||
 |[info](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-info)|informations about NerdyAion||
@@ -59,7 +61,7 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 ## Settings
 | Name | Description |
 |------|-------------|
-|log|the path of the Aion Chat.log file|
+|aion|the path to Aion|
 |player|name by which the player is displayed|
 
 ## Roadmap
@@ -121,10 +123,17 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 - .net 4.6.1
 
 ## Changelog ([complete changelog: CHANGELOG.md](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/CHANGELOG.md))
+### = 0.4.0-alpha March 25th 2019 =
+#### Added
+- new base setting: aion
+#### Changed
+- changed base command: info (optical change)
+#### Removed
+- removed base setting: log
 ### = 0.3.0-alpha March 24th 2019 =
 #### Added
-- new damage informationen dps (damage per second) 
-- new base settings player
+- new damage informationen: dps (damage per second) 
+- new base setting: player
 #### Fixed
 - Fix damage calculation: the same attack added multiple times
 - Fix damage calculation: damage tick associated for multiple attacks
@@ -135,21 +144,21 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 ### = 0.1.0-alpha March 18th 2019 =
 #### Added
 - damage calculation on the base of the immediate damage
-- new base command goto
-- new base command back
-- new base command clear
-- new base command info
-- new base command help
-- new base command bye
-- new damage (path: dmg) command create
-- new damage (path: dmg) command list
-- new damage (path: dmg) command show
-- new damage (path: dmg) command copy
-- new settings (path: settings) command show
-- new settings (path: settings) command edit
-- new settings (path: settings) command save
-- new settings (path: settings) command undo
-- new base settings log
+- new base command: goto
+- new base command: back
+- new base command: clear
+- new base command: info
+- new base command: help
+- new base command: bye
+- new damage (path: dmg) command: create
+- new damage (path: dmg) command: list
+- new damage (path: dmg) command: show
+- new damage (path: dmg) command: copy
+- new settings (path: settings) command: show
+- new settings (path: settings) command: edit
+- new settings (path: settings) command: save
+- new settings (path: settings) command: undo
+- new base setting: log
 
 ## Support Possibilities
 - give proposals

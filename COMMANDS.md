@@ -3,6 +3,7 @@
 | Name | Description | Path |
 |------|-------------|------|
 |[goto](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-goto)|go to path x||
+|[chatlog](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-chatlog)|set chatlog active||
 |[back](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-back)|go back to main path||
 |[clear](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-clear)|cleared the console||
 |[info](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-info)|informations about NerdyAion||
@@ -24,6 +25,13 @@ goto <path>
 ```
 Arguments:
 - `path` the path
+## Command "chatlog"
+Sets chatlog active.
+```console
+chatlog <option>
+```
+Arguments:
+- `option` option for chatlog (options: on)
 ## Command "back"
 Sets the activ path to the main path
 ```console
