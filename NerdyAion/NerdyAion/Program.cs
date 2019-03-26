@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 25.03.2019
+// Last Edited On: 26.03.2019
 // Language: C#
 //
 using System;
@@ -44,20 +44,22 @@ namespace NerdyAion
             if (!Commands.Settings.LoudSettings())
             {
                 Commands.Settings.CreateSettingsFile();
-                Commands.Settings.AddSetting("version", "0.5.0-alpha", true, null);
+                Commands.Settings.AddSetting("version", "1.0.0", true, null);
                 Commands.Settings.AddSetting("aion", @"C:\Program Files\Gameforge\AION Free-To-Play");
                 Commands.Settings.AddSetting("player", "ich");
                 Commands.Settings.AddSetting("chatlog_active", "0");
+                Commands.Settings.AddSetting("languarge", "DE");
                 Commands.Settings.SaveSettings();
             }
             else
             {
-                if (Commands.Settings.GetSetting("version") != "0.5.0-alpha")
+                if (Commands.Settings.GetSetting("version") != "1.0.0")
                 {
                     SettingsController temp = new SettingsController(System.AppDomain.CurrentDomain.BaseDirectory + @"\settings.txt", false);
-                    temp.AddSetting("version", "0.5.0-alpha", true, null);
+                    temp.AddSetting("version", "1.0.0", true, null);
                     temp.AddSetting("aion", @"C:\Program Files\Gameforge\AION Free-To-Play");
                     temp.AddSetting("check_chatlog_active", "0");
+                    temp.AddSetting("languarge", "DE");
 
                     foreach (Setting item in Commands.Settings.GetAllSettings())
                     {

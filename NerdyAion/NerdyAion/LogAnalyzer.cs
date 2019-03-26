@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 24.03.2019
+// Last Edited On: 26.03.2019
 // Language: C#
 //
 using System;
@@ -61,14 +61,14 @@ namespace NerdyAion
             set { skillList = value; }
         }
 
-        public LogAnalyzer(String logFilePath)
+        public LogAnalyzer(String logFilePath, String languarge = "DE")
         {
             Log = new LogReader(logFilePath);
             AnalysisTemplates = new List<AnalysisTemplate>();
             PlayerList = new Dictionary<string, Player>();
             SkillList = new Dictionary<string, string>();
 
-            SetAnalysisTemplates();
+            SetAnalysisTemplates(languarge);
         }
 
         public void AnalyzeLog()
@@ -206,7 +206,22 @@ namespace NerdyAion
             return text;
         }
 
-        private void SetAnalysisTemplates()
+        private void SetAnalysisTemplates(String languarge)
+        {
+            switch (languarge)
+            {
+                case "DE":
+                    AnalysisTemplatesDE();
+                    break;
+                case "EN":
+                    AnalysisTemplatesEN();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void AnalysisTemplatesDE()
         {
             AnalysisTemplate temp = null;
 
@@ -395,6 +410,136 @@ namespace NerdyAion
             temp.AddVariable("time");
             temp.AddVariable("eventTarget");
             temp.AddVariable("eventSource_eventName");
+
+            AnalysisTemplates.Add(temp);
+        }
+
+        private void AnalysisTemplatesEN()
+        {
+            AnalysisTemplate temp = null;
+
+            //2019.03.26 18:01:35 : You received 113 damage from Poisonous Piton. 
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* received .* damage from .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) received (?<eventEffect>[^,]+) damage from (?<eventSource>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventEffect");
+            temp.AddVariable("eventSource");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:36 : You inflicted 0 damage on Flaming Piton and dispelled some of their magical buffs and debuffs by using Magic Explosion. 
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* inflicted .* damage on .* and .* by using .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) inflicted (?<eventEffect>[^,]+) damage on (?<eventTarget>[^,]+) and (?<eventEffectExtra>[^,]+) by using (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventEffect");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventEffectExtra");
+            temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:37 : Flaming Piton has inflicted 2.207 damage on you by using Destructive Strike. 
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* has inflicted .* damage on .* by using .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) has inflicted (?<eventEffect>[^,]+) damage on (?<eventTarget>[^,]+) by using (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventEffect");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:45 : You inflicted 26.150 damage on Flaming Piton by using Cyclone of Wrath.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = false;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* inflicted .* damage on .* by using .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) inflicted (?<eventEffect>[^,]+) damage on (?<eventTarget>[^,]+) by using (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventEffect");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:46 : Flaming Piton received 9.282 damage due to the effect of Erosion.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = true;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* received .* damage due to the effect of .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) received (?<eventEffect>[^,]+) damage due to the effect of (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventEffect");
+            temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:39 : You inflicted continuous damage on Flaming Piton by using Erosion. 
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* inflicted continuous damage on .* by using .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) inflicted continuous damage on (?<eventTarget>[^,]+) by using (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("eventName");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:54 : Vrajitoarea-Nerga used Flame Cage to inflict the continuous damage effect on Poisonous Piton.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* used .* to inflict the continuous damage effect on .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventSource>[^,]+) used (?<eventName>[^,]+) to inflict the continuous damage effect on (?<eventTarget>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventName");
+            temp.AddVariable("eventTarget");
+
+            AnalysisTemplates.Add(temp);
+
+            //2019.03.26 18:01:54 : Exam Scarecrow received the Delayed Blast effect as you used Big Magma Eruption.
+            temp = new AnalysisTemplate();
+            temp.DamageEvent = false;
+            temp.DamageOverTime = true;
+            temp.CriticalHit = false;
+            temp.Strucktor = ".* : .* received the .* effect as .* used .*.";
+            temp.Template = @"(?<time>[^,]+) : (?<eventTarget>[^,]+) received the (?<event>[^,]+) effect as (?<eventSource>[^,]+) used (?<eventName>[^,]+).";
+            temp.CriticalIdentifier = "Critical Strike!";
+            temp.AddVariable("time");
+            temp.AddVariable("eventTarget");
+            temp.AddVariable("event");
+            temp.AddVariable("eventSource");
+            temp.AddVariable("eventName");
 
             AnalysisTemplates.Add(temp);
         }

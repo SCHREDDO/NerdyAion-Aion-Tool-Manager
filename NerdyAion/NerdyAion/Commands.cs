@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 19.02.2019
-// Last Edited On: 25.02.2019
+// Last Edited On: 26.02.2019
 // Language: C#
 //
 using System;
@@ -200,7 +200,7 @@ namespace NerdyAion
                     {
                         if (!Analyzer.ContainsKey(command[1]))
                         {
-                            Analyzer.Add(command[1], new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log"));
+                            Analyzer.Add(command[1], new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log", Settings.GetSetting("languarge")));
                         }
                         else
                         {
@@ -217,7 +217,7 @@ namespace NerdyAion
                     {
                         if (Analyzer.ContainsKey(command[1]))
                         {
-                            Analyzer[command[1]] = new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log");
+                            Analyzer[command[1]] = new LogAnalyzer(Settings.GetSetting("aion") + @"\Chat.log", Settings.GetSetting("languarge"));
                         }
                         else
                         {
@@ -269,7 +269,7 @@ namespace NerdyAion
                             {
                                 if (!item.Key.Equals(""))
                                 {
-                                    if (item.Key == "ihr" || item.Key == "Ihr")
+                                    if (item.Key == "ihr" || item.Key == "Ihr" || item.Key == "you" || item.Key == "You")
                                     {
                                         player = Settings.GetSetting("player");
                                     }
@@ -307,7 +307,7 @@ namespace NerdyAion
                             {
                                 if (!item.Key.Equals(""))
                                 {
-                                    if (item.Key == "ihr" || item.Key == "Ihr")
+                                    if (item.Key == "ihr" || item.Key == "Ihr" || item.Key == "you" || item.Key == "You")
                                     {
                                         player = Settings.GetSetting("player");
                                     }
