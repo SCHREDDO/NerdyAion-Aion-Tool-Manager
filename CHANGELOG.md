@@ -1,4 +1,10 @@
 # Changelog
+## = 1.0.0 March 26th 2019 =
+### Added
+- add language support for english
+- new settings (path: settings) command: languarge
+- new damage (path: dmg) command: reset
+- new damage (path: dmg) command: delete
 ## = 0.5.0-alpha March 25th 2019 =
 ### Added
 - new base setting: check_chatlog_active
