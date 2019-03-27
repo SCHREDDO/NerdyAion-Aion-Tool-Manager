@@ -1,1 +1,4 @@
 theme: jekyll-theme-dinky
+show_downloads: true
+github:
+  zip_url: https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/releases
