@@ -18,21 +18,24 @@
 //
 //
 // Created By: Sebastian Lühnen
-// Created On: 19.02.2019
+// Created On: 06.04.2019
 // Last Edited On: 21.04.2020
 // Language: C#
 //
 using System;
-using System.Diagnostics;
 
-namespace NerdyAion
+namespace NerdyConsoleOutput
 {
-    public class Program
+    public static class NerdyConsoleOutput
     {
-        static void Main(string[] args)
+        public static void Output(String message)
         {
-            Console.WriteLine("Starting NerdyConsole.exe...");
-            Process.Start("NerdyConsole.exe");
+            Console.WriteLine(message);
+        }
+
+        public static void Error(String errorMessage)
+        {
+            Console.WriteLine("Error: " + errorMessage);
         }
     }
 }

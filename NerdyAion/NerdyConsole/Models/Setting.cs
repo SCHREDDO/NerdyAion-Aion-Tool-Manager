@@ -18,21 +18,45 @@
 //
 //
 // Created By: Sebastian Lühnen
-// Created On: 19.02.2019
+// Created On: 06.04.2019
 // Last Edited On: 21.04.2020
 // Language: C#
 //
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NerdyAion
+namespace NerdyConsole.Models
 {
-    public class Program
+    public class Setting
     {
-        static void Main(string[] args)
+        private String name;
+        private String value;
+        private Boolean saved;
+
+        public String Name
         {
-            Console.WriteLine("Starting NerdyConsole.exe...");
-            Process.Start("NerdyConsole.exe");
+            get { return name; }
+            set { name = value; }
+        }
+        public String Value
+        {
+            get { return value; }
+            set { this.value = value; }
+        }
+        public Boolean Saved
+        {
+            get { return saved; }
+            set { saved = value; }
+        }
+
+        public Setting(String name, String value)
+        {
+            Name = name;
+            Value = value;
+            Saved = true;
         }
     }
 }
