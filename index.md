@@ -37,15 +37,16 @@ NerdyAion is a DMG meter for the game Aion. The primary goal of NerdyAion is to 
 
 | Name | Description |
 |------|-------------|
-| [info](./COMMANDS.md#command-info) | information about NerdyAion |
-| [help](./COMMANDS.md#command-help) | shows commands and information |
-| [clear](./COMMANDS.md#command-clear) | clears the console |
-| [settings](./COMMANDS.md#command-settings) | handling settings |
-| [dmg](./COMMANDS.md#command-dmg) | provides damage information |
-| [chatlog](./COMMANDS.md#command-chatlog) | activate or deactivate the chatlog |
-| [bye](./COMMANDS.md#command-bye) | close NerdyAion |
+| [info](./commands#command-info) | information about NerdyAion |
+| [help](./commands#command-help) | shows commands and information |
+| [clear](./commands#command-clear) | clears the console |
+| [settings](./commands#command-settings) | handling settings |
+| [dmg](./commands#command-dmg) | provides damage information |
+| [chatlog](./commands#command-chatlog) | activate or deactivate the chatlog |
+| [bye](./commands#command-bye) | close NerdyAion |
 
 ## Settings
+
 | Name | Description |
 |------|-------------|
 | language | language of the Aion client (DE, EN) |
@@ -93,7 +94,7 @@ The <player> has a dps of <dps>.
 - add a graphical user interface
 - add 'realtime' damage and heal calculation
 
-## Changelog ([complete changelog](./CHANGELOG.md))
+## Changelog ([complete changelog](./changelog))
 ### = 2.0.0 March 26th 2019 =
 #### Added
 - new setting: dmg_template
