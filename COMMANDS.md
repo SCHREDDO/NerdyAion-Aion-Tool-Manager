@@ -1,128 +1,153 @@
 # Commands
 
-| Name | Description | Path |
-|------|-------------|------|
-|[goto](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-goto)|go to path x||
-|[chatlog](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-chatlog)|set chatlog active||
-|[back](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-back)|go back to main path||
-|[clear](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-clear)|cleared the console||
-|[info](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-info)|informations about NerdyAion||
-|[help](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-help)|shows commands and paths||
-|[bye](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-bye)|close NerdyAion||
-|[create](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-create)|create a dmg chatlog pointer|dmg|
-|[reset](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-reset)|reset the dmg chatlog pointer x|dmg|
-|[delete](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-delete)|delete the dmg chatlog pointer x|dmg|
-|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|shows dmg informations from pointer x|dmg|
-|[copy](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-copy)|copy dmg informations from pointer x|dmg|
-|[show](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-show)|list of settings|settings|
-|[edit](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-edit)|edit a setting|settings|
-|[save](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-save)|saved changes from settings|settings|
-|[undo](https://github.com/SCHREDDO/NerdyAion-Aion-Tool-Manager/blob/master/COMMANDS.md#command-undo)|reset the last changes|settings|
+| Name | Description |
+|------|-------------|
+| [info](#command-info) | information about NerdyAion |
+| [help](#command-help) | shows commands and information |
+| [clear](#command-clear) | clears the console |
+| [settings](#command-settings) | handling settings |
+| [dmg](#command-dmg) | provides damage information |
+| [chatlog](#command-chatlog) | activate or deactivate the chatlog |
+| [bye](#command-bye) | close NerdyAion |
 
-# Base Commands
-## Command "goto"
-Sets the activ path to the path `<path>`.
-```console
-goto <path>
-```
-Arguments:
-- `path` the path
-## Command "chatlog"
-Sets chatlog active.
-```console
-chatlog <option>
-```
-Arguments:
-- `option` option for chatlog (options: on)
-## Command "back"
-Sets the activ path to the main path
-```console
-back
-```
-## Command "clear"
-Cleared the console.
-```console
-clear
-```
 ## Command "info"
-Shows informations about NerdyAvion
+Displayed information about the used application.
+
+Syntax:
+```console
+info [-a | -r | -v | -c]
+```
+Arguments:
+- `-a`: shows only the author of the application
+- `-r`: shows only the repository of the application
+- `-v`: shows only the version of the application
+- `-c`: checks if there is a new version available
+
+Example:
 ```console
 info
+info -v
 ```
+
 ## Command "help"
-Shows a list of commands and paths or informations about a the `<command>`.
+Provides information about commands. If used without parameters a lists of all commands are displayed without a briefly description.
+
+Syntax:
 ```console
 help [command]
 ```
 Arguments:
-- `command` the command
+- `command`: the command you wish to receive more information about
+
+Example:
+```console
+help
+help dmg
+```
+
+## Command "clear"
+Deletes the display information of the current console window.
+
+Syntax:
+```console
+clear
+```
+Example:
+```console
+clear
+```
+
+## Command "settings"
+For handling application settings.
+
+Syntax:
+```console
+settings <show | edit | save | undo | reset> [-s] [setting] [value]
+```
+```console
+settings show
+settings edit [-s] <setting> <value>
+settings save
+settings undo
+settings reset
+```
+Arguments:
+- `show`: shows all settings and values
+- `edit`: edit the `<setting>` with the new value `<value>`
+- `save`: saved changes from settings
+- `undo`: reset the last changes from settings, only if not saved
+- `reset`: reset the last changes from settings, only if not saved
+- `-s`: for saving instantly
+- `setting`: which setting is to be changed
+- `value`: what value the setting should be set to
+
+Example:
+```console
+settings show
+settings edit language EN
+settings edit -s language DE
+settings save
+settings undo
+settings reset
+```
+
+## Command "dmg"
+For handling damage information.
+
+Syntax:
+```console
+dmg <add | list | clear | remove | show | copy> [pointer name]
+```
+```console
+dmg add <pointer name>
+dmg list
+dmg clear <pointer name>
+dmg remove <pointer name>
+dmg show <pointer name>
+dmg copy <pointer name>
+```
+Arguments:
+- `add`: add a pointer (start point) for the analyzing with the given name `<pointer name>`
+- `list`: shows all pointer.
+- `clear`: reset a given pointer
+- `remove`: remove a given pointer
+- `show`: Shows damage information of a given pointer
+- `copy`: Copy damage information of a given pointer
+- `pointer name`: the pointer name
+
+Example:
+```console
+dmg add boss
+dmg list
+dmg clear boss
+dmg remove boss
+dmg show boss
+dmg copy boss
+```
+
+## Command "chatlog"
+Activate or deactivate the Aion chatlog. Aion is not allowed to run for this process.
+
+Syntax:
+```console
+chatlog <option>
+```
+Arguments:
+- `option`: on or off
+
+Example:
+```console
+chatlog on
+```
+
 ## Command "bye"
-Closes NerdyAion.
+Closes the application.
+
+Syntax:
 ```console
 bye
 ```
-# Damage (Path: dmg) Commands
-## Command "create"
-Create a pointer (start point) for the analyzing with the given name `<pointer name>`.
+Example:
 ```console
-create <pointer name>
-```
-Arguments:
-- `pointer name` the pointer name
-## Command "reset"
-Reset the pointer `<pointer name>`.
-```console
-reset <pointer name>
-```
-Arguments:
-- `pointer name` the pointer name
-## Command "delete"
-Delete the pointer `<pointer name>`.
-```console
-delete <pointer name>
-```
-Arguments:
-- `pointer name` the pointer name
-## Command "list"
-Shows all pointer.
-```console
-list
-```
-## Command "show"
-Shows dmg informations from pointer `<pointer name>`.
-```console
-show <pointer name>
-```
-Arguments:
-- `pointer name` the pointer name
-## Command "copy"
-Cpy the dmg informations from pointer `<pointer name>`.
-```console
-copy <pointer name>
-```
-Arguments:
-- `pointer name` the pointer name
-# Settings (Path: settings) Commands
-## Command "show"
-Shows all settings an values.
-```console
-show
-```
-## Command "edit"
-Edit the `<setting>` with the new value `<value>`.
-```console
-edit <setting> <value>
-```
-Arguments:
-- `setting` which setting is to be changed
-- `value` what value the setting should be set to 
-## Command "save"
-Saved changes from settings.
-```console
-save
-```
-## Command "undo"
-Reset the last changes from settings.
-```console
-undo
+bye
 ```
