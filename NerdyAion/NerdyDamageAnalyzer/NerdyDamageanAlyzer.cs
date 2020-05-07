@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 06.04.2019
-// Last Edited On: 21.04.2020
+// Last Edited On: 04.05.2020
 // Language: C#
 //
 using System;
@@ -29,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Timers;
 
 namespace NerdyDamageAnalyzer
 {
@@ -56,6 +57,16 @@ namespace NerdyDamageAnalyzer
             SkillList = new Dictionary<string, string>();
 
             SetAnalysisTemplates(languarge);
+        }
+
+        private Timer timer1 = null;
+        public void InitTimer()
+        {
+            timer1 = new Timer();
+            timer1.Elapsed += (sender, args) => AnalyzeLog();
+            timer1.AutoReset = true;
+            timer1.Interval = 1000;
+            timer1.Start();
         }
 
         public void AnalyzeLog()

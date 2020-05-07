@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 06.04.2019
-// Last Edited On: 21.04.2020
+// Last Edited On: 04.05.2020
 // Language: C#
 //
 using System;
@@ -129,7 +129,7 @@ namespace NerdyINI
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
         }
 

@@ -19,7 +19,7 @@
 //
 // Created By: Sebastian Lühnen
 // Created On: 06.04.2019
-// Last Edited On: 21.04.2020
+// Last Edited On: 04.05.2020
 // Language: C#
 //
 using System;
@@ -33,16 +33,23 @@ namespace Damage
     public class Damage : BaseCommand
     {
         public Dictionary<string, string> Analyzer { get; set; }
+        public Dictionary<string, bool> IsInterval { get; set; }
 
         public override int Initialize(Dictionary<string, string> baseSettings, Dictionary<string, string> commandSettings)
         {
             Analyzer = new Dictionary<string, string>();
+            IsInterval = new Dictionary<string, bool>();
 
             return 0;
         }
 
         public override int Execute(string command, object[] args, Dictionary<string, string> baseSettings, Dictionary<string, string> commandSettings)
         {
+            if (!File.Exists($"{baseSettings["aion"]}{Path.DirectorySeparatorChar}Chat.log"))
+            {
+                return 4;
+            }
+
             int code = 0;
             if (args.Length == 1)
             {
@@ -69,12 +76,35 @@ namespace Damage
                         {
                             if (!Analyzer.ContainsKey((String)args[1]))
                             {
-                                Obj($"nda{args[1].ToString()}", "NerdyDamageAnalyzer.NerdyDamageAnalyzer", new object[] { $"{baseSettings["aion"]}{Path.DirectorySeparatorChar}Chat.log", baseSettings["language"], baseSettings["player"]}, this.CPatch("lib", "NerdyDamageanAlyzer.dll"));
+                                Obj($"nda{args[1].ToString()}", "NerdyDamageAnalyzer.NerdyDamageAnalyzer", new object[] { $"{baseSettings["aion"]}{Path.DirectorySeparatorChar}Chat.log", baseSettings["language"], baseSettings["player"] }, this.CPatch("lib", "NerdyDamageanAlyzer.dll"));
                                 Analyzer.Add(args[1].ToString(), $"nda{args[1].ToString()}");
+                                IsInterval.Add(args[1].ToString(), false);
                             }
                             else
                             {
                                 code = 2;
+                            }
+                        }
+                        else if (args.Length == 3)
+                        {
+                            if (((String)args[1]) == "-i")
+                            {
+                                if (!Analyzer.ContainsKey((String)args[2]))
+                                {
+                                    Obj($"nda{args[2].ToString()}", "NerdyDamageAnalyzer.NerdyDamageAnalyzer", new object[] { $"{baseSettings["aion"]}{Path.DirectorySeparatorChar}Chat.log", baseSettings["language"], baseSettings["player"] }, this.CPatch("lib", "NerdyDamageanAlyzer.dll"));
+                                    Analyzer.Add(args[2].ToString(), $"nda{args[2].ToString()}");
+                                    IsInterval.Add(args[2].ToString(), true);
+
+                                    ExMethod(Analyzer[(String)args[2]], "InitTimer", new object[] { }, new Type[] { });
+                                }
+                                else
+                                {
+                                    code = 2;
+                                }
+                            }
+                            else
+                            {
+                                code = 1;
                             }
                         }
                         else
@@ -106,6 +136,7 @@ namespace Damage
                             {
                                 RemoveObj(Analyzer[(String)args[1]]);
                                 Analyzer.Remove((String)args[1]);
+                                IsInterval.Remove((String)args[1]);
                             }
                             else
                             {
@@ -122,7 +153,10 @@ namespace Damage
                         {
                             if (Analyzer.ContainsKey((String)args[1]))
                             {
-                                ExMethod(Analyzer[(String)args[1]], "AnalyzeLog", new object[] { }, new Type[] { });
+                                if (!IsInterval[(String)args[1]])
+                                {
+                                    ExMethod(Analyzer[(String)args[1]], "AnalyzeLog", new object[] { }, new Type[] { });
+                                }
 
                                 ConsoleOut("==== PLAYER LIST ====");
 
@@ -147,7 +181,10 @@ namespace Damage
                         {
                             if (Analyzer.ContainsKey((String)args[1]))
                             {
-                                ExMethod(Analyzer[(String)args[1]], "AnalyzeLog", new object[] { }, new Type[] { });
+                                if (!IsInterval[(String)args[1]])
+                                {
+                                    ExMethod(Analyzer[(String)args[1]], "AnalyzeLog", new object[] { }, new Type[] { });
+                                }
 
                                 List<String> temp = new List<String>();
                                 temp = (List<String>)ExMethod(Analyzer[(String)args[1]], "Show", new object[] { baseSettings["dmg_template"], baseSettings["sort_by"], Convert.ToInt32(baseSettings["show_max"]) }, new Type[] { typeof(String), typeof(String), typeof(int) });
@@ -186,6 +223,7 @@ namespace Damage
             info.Add("i1", "Unknown argument or arguments. Try 'help dmg' for help.");
             info.Add("i2", "Pointer already exists.");
             info.Add("i3", "Pointer does not exists.");
+            info.Add("i4", "Chat.log does not exists.");
 
             return info;
         }
@@ -195,10 +233,10 @@ namespace Damage
             return "For handling damage information.\n\n"
                     + "Syntax:\n"
                     + "```console\n"
-                    + "dmg <add | list | clear | remove | show | copy> [pointer name]\n"
+                    + "dmg <add | list | clear | remove | show | copy> [-i] [pointer name]\n"
                     + "```\n"
                     + "```console\n"
-                    + "dmg add <pointer name>\n"
+                    + "dmg add [-i] <pointer name>\n"
                     + "dmg list\n"
                     + "dmg clear <pointer name>\n"
                     + "dmg remove <pointer name>\n"
@@ -207,15 +245,17 @@ namespace Damage
                     + "```\n\n"
                     + "Arguments:\n"
                     + "-`add`: add a pointer(start point) for the analyzing with the given name `<pointer name>`\n"
+                    + "-`-i`: the Chat.log will be analyz in background else only when `dmg show <pointer name>`"
                     + "-`list`: shows all pointer.\n"
                     + "-`clear`: reset a given pointer\n"
                     + "-`remove`: remove a given pointer\n"
-                    + "-`show`: Shows damage information of a given pointer\n"
-                    + "-`copy`: Copy damage information of a given pointer\n"
+                    + "-`show`: shows damage information of a given pointer\n"
+                    + "-`copy`: copy damage information of a given pointer\n"
                     + "-`pointer name`: the pointer name\n\n"
                     + "Example:\n"
                     + "```console\n"
                     + "dmg add boss\n"
+                    + "dmg add -i tf\n"
                     + "dmg list\n"
                     + "dmg clear boss\n"
                     + "dmg remove boss\n"

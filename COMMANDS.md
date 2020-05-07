@@ -96,10 +96,11 @@ For handling damage information.
 
 Syntax:
 ```console
-dmg <add | list | clear | remove | show | copy> [pointer name]
+dmg <add | list | clear | remove | show | copy> [-i] [pointer name]
 ```
 ```console
 dmg add <pointer name>
+dmg add [-i] <pointer name>
 dmg list
 dmg clear <pointer name>
 dmg remove <pointer name>
@@ -108,6 +109,7 @@ dmg copy <pointer name>
 ```
 Arguments:
 - `add`: add a pointer (start point) for the analyzing with the given name `<pointer name>`
+- `-i`: the Chat.log will be analyzed in background else only when `dmg show <pointer name>`
 - `list`: shows all pointer.
 - `clear`: reset a given pointer
 - `remove`: remove a given pointer
@@ -118,6 +120,7 @@ Arguments:
 Example:
 ```console
 dmg add boss
+dmg add -i tf
 dmg list
 dmg clear boss
 dmg remove boss
